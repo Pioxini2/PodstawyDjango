@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 def hello(request, number):
     print(request)
@@ -11,6 +12,7 @@ def hello(request, number):
 
 def calc(request):
     pass
+    return HttpResponse("")
 
 '''def factorial(request):
     return HttpResponse("Tu bedzie silnia")'''
