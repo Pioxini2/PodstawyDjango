@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import hello
+from .views import calc, hello
 
 urlpatterns = [
-    path('hello/', hello)
+    path('hello/<int:number>', hello),
+    path('calc', calc)
 ]
