@@ -37,6 +37,11 @@ def add_user(request):
     username = data["username"]
     password = data["password"]
 
+    users=User.objects.all()
+    for existing_user in users:
+        if existing_user.username == username:
+            return HttpResponse("Users already exists!", status=400)
+
     user = User(username=username, password=password)
     user.save()
 
