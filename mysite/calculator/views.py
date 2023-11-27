@@ -31,5 +31,16 @@ def get_users(request):
 
     return JsonResponse({"users" : users_data})
 
+@csrf_exempt
+def add_user(request):
+    data = json.loads(request.body)
+    username = data["username"]
+    password = data["password"]
+
+    user = User(username=username, password=password)
+    user.save()
+
+    return JsonResponse({"username": user.username, "password": user.password})
+
 '''def factorial(request):
     return HttpResponse("Tu bedzie silnia")'''
