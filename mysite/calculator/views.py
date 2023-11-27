@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 
 # Create your views here.
@@ -10,9 +11,12 @@ def hello(request, number):
     #return HttpResponse(f"Hello,  World! {request.GET['x']}")
     return HttpResponse(f"Hello,  World! {number}")
 
+@csrf_exempt
 def calc(request):
-    pass
-    return HttpResponse("")
+    data = json.loads(request.body)
+    if data["operation"] == "+":
+        result = data["a"]+data["b"]
+    return HttpResponse(f"{result}")
 
 '''def factorial(request):
     return HttpResponse("Tu bedzie silnia")'''
