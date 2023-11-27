@@ -47,5 +47,17 @@ def add_user(request):
 
     return JsonResponse({"username": user.username, "password": user.password})
 
+@csrf_exempt
+def login(request):
+    data = json.loads(request.body)
+    username = data["username"]
+    password = data["password"]
+
+    try:
+        user = User.objects.get(username=username, password=password)
+        return HttpResponse("User does exists!", status=200)
+    except:
+        return HttpResponse("User does not exists!", status=404)
+
 '''def factorial(request):
     return HttpResponse("Tu bedzie silnia")'''
