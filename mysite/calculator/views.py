@@ -27,7 +27,7 @@ def get_users(request):
 
     users_data=[]
     for user in users:
-        users_data.append(user.username)
+        users_data.append((user.username, user.password))
 
     return JsonResponse({"users" : users_data})
 
