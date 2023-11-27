@@ -1,3 +1,4 @@
+import hashlib
 import json
 from django.shortcuts import render
 
@@ -36,6 +37,7 @@ def add_user(request):
     data = json.loads(request.body)
     username = data["username"]
     password = data["password"]
+    password = hashlib.sha256(password.encode("utf-8")).hexdigest()
 
     users=User.objects.all()
     for existing_user in users:
@@ -52,6 +54,7 @@ def login(request):
     data = json.loads(request.body)
     username = data["username"]
     password = data["password"]
+    password = hashlib.sha256(password.encode("utf-8")).hexdigest()
 
     try:
         user = User.objects.get(username=username, password=password)
