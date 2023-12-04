@@ -58,6 +58,8 @@ def login(request):
 
     try:
         user = User.objects.get(username=username, password=password)
+        user.login_count += 1
+        user.save()
         return HttpResponse("User does exists!", status=200)
     except:
         return HttpResponse("User does not exists!", status=404)
