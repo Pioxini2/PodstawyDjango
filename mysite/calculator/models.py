@@ -8,3 +8,7 @@ class User(models.Model):
 
     def __str__(self):
         return f"{self.username} - {self.id}"
+
+class Note(models.Model):
+    content = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
