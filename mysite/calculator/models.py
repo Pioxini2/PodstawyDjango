@@ -15,3 +15,6 @@ class Note(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user.username} - {self.content}"
+    
+    def is_longer_than(self, min_length):
+        return len(self.content) > min_length

@@ -65,12 +65,25 @@ def login(request):
         return HttpResponse("User does not exists!", status=404)
 
 
+@csrf_exempt
 def get_notes(request):
-    notes = Note.objects.all()
+    data = json.loads(request.body)
+    username = data["username"]
+    password = data["password"]
+    min_length = data.get("min_length", 0)
+    password = hashlib.sha256(password.encode("utf-8")).hexdigest()
+
+    try:
+        user = User.objects.get(username=username, password=password)
+    except:
+        return HttpResponse("User does not exists!", status=404)
+
+    notes = Note.objects.filter(user=user)
 
     notes_data=[]
     for note in notes:
-        notes_data.append((note.user.username, note.content))
+        if note.is_longer_than(min_length):
+            notes_data.append((note.content))
 
     return JsonResponse({"notes" : notes_data})
 
