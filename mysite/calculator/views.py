@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from calculator.models import User
+from calculator.models import Note, User
 
 def hello(request, number):
     print(request)
@@ -63,6 +63,16 @@ def login(request):
         return HttpResponse("User does exists!", status=200)
     except:
         return HttpResponse("User does not exists!", status=404)
+
+
+def get_notes(request):
+    notes = Note.objects.all()
+
+    notes_data=[]
+    for note in notes:
+        notes_data.append((note.user.username, note.content))
+
+    return JsonResponse({"notes" : notes_data})
 
 '''def factorial(request):
     return HttpResponse("Tu bedzie silnia")'''

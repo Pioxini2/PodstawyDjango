@@ -12,3 +12,6 @@ class User(models.Model):
 class Note(models.Model):
     content = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.user.username} - {self.content}"
